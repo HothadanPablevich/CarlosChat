@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class ServerLogic {
 
     /*We keep the port in a constant*/
-    private final static int PORT = 3502;
+    private final static int PORT = 3503;
 
     public static void main(String[] args) {
         

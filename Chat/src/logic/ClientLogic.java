@@ -64,7 +64,7 @@ public class ClientLogic {
     	//Socket para la comunicacion cliente servidor        
         try {            
             System.out.println("Client -> Start");  
-            ClientLogic cli = new ClientLogic("Carlos", 3502, "192.168.31.11");
+            ClientLogic cli = new ClientLogic("Carlos", 3504, "localhost");
             //To read from the server      
             BufferedReader input = new BufferedReader( new InputStreamReader(cli.getSocket().getInputStream()));   
             ReaderThread reader= new ReaderThread(input);

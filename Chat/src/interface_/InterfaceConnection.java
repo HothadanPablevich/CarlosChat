@@ -89,7 +89,8 @@ public class InterfaceConnection extends JFrame {
 				InterfaceChat fc = new InterfaceChat(cli);
 				fc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				fc.setVisible(true);
-				System.out.println(cli.toString());
+				dispose();
+				//System.out.println(cli.toString());
 			}
 		});
 	}
