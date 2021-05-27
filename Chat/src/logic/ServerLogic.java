@@ -18,8 +18,8 @@ public class ServerLogic {
     private static  ServerSocket serverSocket;
     private ArrayList<Socket> clientSockets= new  ArrayList<Socket>();
     private ArrayList<BufferedReader> clientBuffersIn= new  ArrayList<BufferedReader>();
-    private ArrayList<BufferedReader> clientBuffersOut= new  ArrayList<BufferedReader>();
-    private ArrayList<Thread> clientThread= new  ArrayList<Thread>();
+    private ArrayList<PrintStream> clientBuffersOut= new  ArrayList<PrintStream>();
+    private ArrayList<ReaderThread> clientThread= new  ArrayList<ReaderThread>();
     
     public static ServerSocket getServerSocket() {
 		return serverSocket;
@@ -39,16 +39,16 @@ public class ServerLogic {
 	public void setClientBuffersIn(ArrayList<BufferedReader> clientBuffersIn) {
 		this.clientBuffersIn = clientBuffersIn;
 	}
-	public ArrayList<BufferedReader> getClientBuffersOut() {
+	public ArrayList<PrintStream> getClientBuffersOut() {
 		return clientBuffersOut;
 	}
-	public void setClientBuffersOut(ArrayList<BufferedReader> clientBuffersOut) {
+	public void setClientBuffersOut(ArrayList<PrintStream> clientBuffersOut) {
 		this.clientBuffersOut = clientBuffersOut;
 	}
-	public ArrayList<Thread> getClientThread() {
+	public ArrayList<ReaderThread> getClientThread() {
 		return clientThread;
 	}
-	public void setClientThread(ArrayList<Thread> clientThread) {
+	public void setClientThread(ArrayList<ReaderThread> clientThread) {
 		this.clientThread = clientThread;
 	}
 	public ServerLogic (ServerSocket server) {
@@ -70,11 +70,12 @@ public class ServerLogic {
             //setSoLinger closes the socket giving 10mS to receive the remaining data
             client.setSoLinger (true, 10);*/
             //an input reader to read from the socket
-            BufferedReader input = new BufferedReader(new InputStreamReader(server.getClientSockets().get(0).getInputStream()));
+            /*BufferedReader input = new BufferedReader(new InputStreamReader(server.getClientSockets().get(0).getInputStream()));
             ReaderThread reader= new ReaderThread(input);
-            reader.start();
+            
+            reader.start();*/
             String line ="";
-            PrintStream output = new PrintStream(server.getClientSockets().get(0).getOutputStream());
+            //PrintStream output = new PrintStream(server.getClientSockets().get(0).getOutputStream());
             while(!line.equalsIgnoreCase("quit")){
             //to print data out                
             // now we read a line from the keyboard
