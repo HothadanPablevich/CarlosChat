@@ -61,19 +61,20 @@ public class ServerLogic {
             //Server Socket to wait for network requests
         	ServerLogic server = new ServerLogic(new ServerSocket(PORT));
             System.out.println("Server started");    
-              
-            //Client Socket
+            ConnectionThread conn = new ConnectionThread(server);
+            conn.start();
+            /*//Client Socket
             Socket client;
             System.out.println("Server waiting for a client...");  
             client = server.accept();
             //setSoLinger closes the socket giving 10mS to receive the remaining data
-            client.setSoLinger (true, 10);
+            client.setSoLinger (true, 10);*/
             //an input reader to read from the socket
-            BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            BufferedReader input = new BufferedReader(new InputStreamReader(server.getClientSockets().get(0).getInputStream()));
             ReaderThread reader= new ReaderThread(input);
             reader.start();
             String line ="";
-            PrintStream output = new PrintStream(client.getOutputStream());
+            PrintStream output = new PrintStream(server.getClientSockets().get(0).getOutputStream());
             while(!line.equalsIgnoreCase("quit")){
             //to print data out                
             // now we read a line from the keyboard
@@ -85,8 +86,8 @@ public class ServerLogic {
             System.out.println("Server -> send the line to the client");
             }
             //close connection
-            client.close();
-            server.close();
+            server.getClientSockets().get(0).close();
+            server.getServerSocket().close();
                
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
