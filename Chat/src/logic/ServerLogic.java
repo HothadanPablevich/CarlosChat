@@ -82,8 +82,8 @@ public class ServerLogic {
             System.out.println("Server -> type a sentence to send to the client:");
             line= tec.nextLine();
             System.out.println("Server -> read line (keyboard): " + line);
-            output.flush();//empty contents 
-            output.println(line);       
+            //output.flush();//empty contents 
+            //output.println(line);       
             System.out.println("Server -> send the line to the client");
             }
             //close connection

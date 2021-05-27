@@ -90,10 +90,11 @@ public class InterfaceChat extends JFrame {
 		        try {             
 		            //To read from the server      
 		            BufferedReader input = new BufferedReader( new InputStreamReader(cli.getSocket().getInputStream()));   
-		            ReaderThread reader= new ReaderThread(input);
-		            reader.start();
+		            
 		            //to write to the server
-		            PrintStream output = new PrintStream(cli.getSocket().getOutputStream());                
+		            PrintStream output = new PrintStream(cli.getSocket().getOutputStream());
+		            ReaderThread reader= new ReaderThread(input, output);
+		            reader.start();
 		            //To read from the user (keyboard)           
 		            Scanner tec = new Scanner(System.in);
 		            //send the line to the server

@@ -44,7 +44,7 @@ public class ConnectionThread extends Thread{
 			clientBuffersIn.add(input);
 			PrintStream output = new PrintStream(client.getOutputStream());
 			clientBuffersOut.add(output);
-			ReaderThread reader = new ReaderThread(input);
+			ReaderThread reader = new ReaderThread(input, output);
 			clientThread.add(reader);
 			reader.start();
 			System.out.println(clientSockets.size()+" Clients connected");
