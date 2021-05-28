@@ -59,7 +59,7 @@ public class ClientLogic {
 		this.socket = socket;
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
     	boolean exit=false;//bandera para controlar ciclo del programa
     	//Socket para la comunicacion cliente servidor        
         try {            
@@ -91,5 +91,5 @@ public class ClientLogic {
        } catch (IOException ex) {
          System.err.println("Client -> " + ex.getMessage());
        }
-    }
+    }*/
 }

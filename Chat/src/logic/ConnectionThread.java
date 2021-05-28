@@ -10,10 +10,7 @@ import java.util.ArrayList;
 
 public class ConnectionThread extends Thread{
 	private ServerLogic server;
-	private ArrayList<Socket> clientSockets = new ArrayList<Socket>();
-	private ArrayList<BufferedReader> clientBuffersIn= new  ArrayList<BufferedReader>();
-    private ArrayList<PrintStream> clientBuffersOut= new  ArrayList<PrintStream>();
-    private ArrayList<ReaderThread> clientThread= new  ArrayList<ReaderThread>();
+	
 	private boolean kill= false;
 	public boolean isKill() {
 		return kill;
@@ -36,17 +33,25 @@ public class ConnectionThread extends Thread{
 	}
 	public void run() {
 		try {
+			ArrayList<Socket> clientSockets = new ArrayList<Socket>();
+			 ArrayList<BufferedReader> clientBuffersIn= new  ArrayList<BufferedReader>();
+		     ArrayList<PrintStream> clientBuffersOut= new  ArrayList<PrintStream>();
+		    ArrayList<ReaderThread> clientThread= new  ArrayList<ReaderThread>();
+		    Socket client;
 			while(!kill) {
-			Socket client;
+			
 			client = server.getServerSocket().accept();
 			clientSockets.add(client);
+			int indexControl = clientSockets.indexOf(client);
 			BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			clientBuffersIn.add(input);
 			PrintStream output = new PrintStream(client.getOutputStream());
+			//output.println(222222);
 			clientBuffersOut.add(output);
-			ReaderThread reader = new ReaderThread(input, output);
+			ReaderThread reader = new ReaderThread(input, output, clientBuffersOut, indexControl);
 			clientThread.add(reader);
-			reader.start();
+			clientThread.get(indexControl).start();
+			//reader.start();
 			System.out.println(clientSockets.size()+" Clients connected");
 			server.setClientSockets(clientSockets);
 			server.setClientBuffersIn(clientBuffersIn);
