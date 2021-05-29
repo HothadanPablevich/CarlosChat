@@ -15,25 +15,42 @@ public class ReaderThread extends Thread {
 	BufferedReader bufferInput;
 	PrintStream output;
 	ArrayList<PrintStream> clientBuffersOut= new  ArrayList<PrintStream>();
+	Socket cli;
+	boolean kill=true;
 	 int index;
-	public ReaderThread(BufferedReader buffer, PrintStream output,ArrayList<PrintStream> allOuts, int index){
+	 ConnectionThread conn;
+	public ReaderThread(BufferedReader buffer, ConnectionThread conn,ArrayList<PrintStream> allOuts,Socket cli, int index){
 		this.bufferInput = buffer;
-		this.output = output;
+		this.conn= conn;
 		this.clientBuffersOut = allOuts;
 		this.index= index;
+		this.cli =cli;
+	}
+	public void kill() {
+		this.kill=false;
 	}
 	@Override
 	public void run(){
-		while(true) {
+		while(kill) {
 			try {
+				
 				String message="";
 				message=bufferInput.readLine();
-				//int indexControl = clientBuffersIn.indexOf(bufferInput);
+				/*if(message.equals(cli.toString())){
+					kill();
+					conn.getClientBuffersIn().remove(index);
+					conn.getClientBuffersOut().remove(index);
+					conn.getClientSockets().get(index).close();
+					conn.getClientSockets().remove(index);
+					conn.getClientThread().remove(index);
+					System.out.println(conn.getClientSockets().get(index));
+				}*/
 				for(int i =0; i< clientBuffersOut.size(); i++) {
-					clientBuffersOut.get(i).println(message);
-					
-					
+						clientBuffersOut.get(i).println(message);
 				}
+			
+				//int indexControl = clientBuffersIn.indexOf(bufferInput);
+				
 				System.out.println(message +" /////Client message " + index);
 				//Scanner tec = new Scanner(System.in);
 				//message= tec.nextLine();

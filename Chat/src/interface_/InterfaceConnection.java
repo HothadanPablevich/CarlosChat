@@ -57,7 +57,7 @@ public class InterfaceConnection extends JFrame {
 		textFieldUsername.setColumns(10);
 		textFieldUsername.setBounds(235, 200, 130, 20);
 		contentPane.add(textFieldUsername);
-		
+		textFieldUsername.setText("Paco");
 		JLabel lblNewLabel = new JLabel("IP direction");
 		lblNewLabel.setBounds(145, 100, 85, 35);
 		contentPane.add(lblNewLabel);
@@ -75,11 +75,13 @@ public class InterfaceConnection extends JFrame {
 		textFieldIpDirecction.setBounds(235, 110, 130, 20);
 		contentPane.add(textFieldIpDirecction);
 		textFieldIpDirecction.setColumns(10);
+		textFieldIpDirecction.setText("localhost");
 		
 		textFieldPortNumber = new JTextField();
 		textFieldPortNumber.setColumns(10);
 		textFieldPortNumber.setBounds(235, 155, 130, 20);
 		contentPane.add(textFieldPortNumber);
+		textFieldPortNumber.setText("3509");
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

@@ -19,10 +19,11 @@ public class WriterThread extends Thread{
 	public void run(){
 		while(true) {
 			try {
-				String message;
+				String message="";
+				//clientBufferOut.println(message);
 				message=bufferinput.readLine();
-				System.out.println(message);
-				clientBufferOut.print(message);
+				System.out.println(message + "/////From the server");
+				//clientBufferOut.println(message);
 				show.setText(show.getText()+"\n"+ message);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

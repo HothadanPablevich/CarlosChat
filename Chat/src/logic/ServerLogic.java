@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class ServerLogic {
 
     /*We keep the port in a constant*/
-    private final static int PORT = 3509;
+    private final static int PORT = 3500;
     private static  ServerSocket serverSocket;
     private ArrayList<Socket> clientSockets= new  ArrayList<Socket>();
     private ArrayList<BufferedReader> clientBuffersIn= new  ArrayList<BufferedReader>();

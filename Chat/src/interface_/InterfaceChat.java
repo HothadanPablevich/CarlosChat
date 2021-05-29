@@ -120,6 +120,7 @@ public class InterfaceChat extends JFrame {
 		            String line="";
 		            	System.out.println("Client mensaje: ");                
 		                 line = cli.getName() +": " + mensaje.getText();
+		                 System.out.println(line + " ////To the server");
 		            	 output.println(line);
 		            	 //TextChat.setText(TextChat.getText() + "\n" + cli.getName() + ": " + mensaje.getText());
 		            	 mensaje.setText("");
@@ -133,13 +134,14 @@ public class InterfaceChat extends JFrame {
 		SendButton.setBounds(568, 368, 131, 31);
 		contentPane.add(SendButton);
 		
-		JButton Button_Disconnect = new JButton("Disconnect");
-		Button_Disconnect.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.RED, Color.RED, Color.RED, Color.RED));
-		Button_Disconnect.setBackground(Color.BLACK);
-		Button_Disconnect.setForeground(Color.RED);
-		Button_Disconnect.addActionListener(new ActionListener() {
+		JButton buttonDisconect = new JButton("Disconnect");
+		buttonDisconect.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.RED, Color.RED, Color.RED, Color.RED));
+		buttonDisconect.setBackground(Color.BLACK);
+		buttonDisconect.setForeground(Color.RED);
+		buttonDisconect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					output.println(cli.getSocket().toString());
 					cli.getSocket().close();
 					System.exit(0);
 				} catch (IOException e1) {
@@ -148,8 +150,8 @@ public class InterfaceChat extends JFrame {
 				}
 			}
 		});
-		Button_Disconnect.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		Button_Disconnect.setBounds(573, 38, 126, 40);
-		contentPane.add(Button_Disconnect);
+		buttonDisconect.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		buttonDisconect.setBounds(573, 38, 126, 40);
+		contentPane.add(buttonDisconect);
 	}
 }

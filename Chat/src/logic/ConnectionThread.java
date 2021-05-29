@@ -10,8 +10,16 @@ import java.util.ArrayList;
 
 public class ConnectionThread extends Thread{
 	private ServerLogic server;
+	ArrayList<Socket> clientSockets = new ArrayList<Socket>();
+	 ArrayList<BufferedReader> clientBuffersIn= new  ArrayList<BufferedReader>();
+    ArrayList<PrintStream> clientBuffersOut= new  ArrayList<PrintStream>();
+   ArrayList<ReaderThread> clientThread= new  ArrayList<ReaderThread>();
+   Socket client;
 	
 	private boolean kill= false;
+	public ConnectionThread() {
+		
+	}
 	public boolean isKill() {
 		return kill;
 	}
@@ -27,17 +35,40 @@ public class ConnectionThread extends Thread{
 	ConnectionThread(ServerLogic server){
 		this.setServer(server);
 	}
+	public ArrayList<Socket> getClientSockets() {
+		return clientSockets;
+	}
+	public ArrayList<BufferedReader> getClientBuffersIn() {
+		return clientBuffersIn;
+	}
+	public ArrayList<PrintStream> getClientBuffersOut() {
+		return clientBuffersOut;
+	}
+	public ArrayList<ReaderThread> getClientThread() {
+		return clientThread;
+	}
+	public void setClientSockets(ArrayList<Socket> clientSockets) {
+		this.clientSockets = clientSockets;
+	}
+	public void setClientBuffersIn(ArrayList<BufferedReader> clientBuffersIn) {
+		this.clientBuffersIn = clientBuffersIn;
+	}
+	public void setClientBuffersOut(ArrayList<PrintStream> clientBuffersOut) {
+		this.clientBuffersOut = clientBuffersOut;
+	}
+	public void setClientThread(ArrayList<ReaderThread> clientThread) {
+		this.clientThread = clientThread;
+	}
 	////Methods////
 	public void kill() {
 		this.setKill(true);
 	}
+	public void killAllFromClient() {
+		
+	}
 	public void run() {
 		try {
-			ArrayList<Socket> clientSockets = new ArrayList<Socket>();
-			 ArrayList<BufferedReader> clientBuffersIn= new  ArrayList<BufferedReader>();
-		     ArrayList<PrintStream> clientBuffersOut= new  ArrayList<PrintStream>();
-		    ArrayList<ReaderThread> clientThread= new  ArrayList<ReaderThread>();
-		    Socket client;
+			ConnectionThread conn= new ConnectionThread();
 			while(!kill) {
 			
 			client = server.getServerSocket().accept();
@@ -48,7 +79,7 @@ public class ConnectionThread extends Thread{
 			PrintStream output = new PrintStream(client.getOutputStream());
 			//output.println(222222);
 			clientBuffersOut.add(output);
-			ReaderThread reader = new ReaderThread(input, output, clientBuffersOut, indexControl);
+			ReaderThread reader = new ReaderThread(input, conn, clientBuffersOut, client, indexControl);
 			clientThread.add(reader);
 			clientThread.get(indexControl).start();
 			//reader.start();
@@ -67,4 +98,5 @@ public class ConnectionThread extends Thread{
 			e.printStackTrace();
 		}
 	}
+	
 }
