@@ -141,7 +141,10 @@ public class InterfaceChat extends JFrame {
 		buttonDisconect.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					output.println(cli.getSocket().toString());
+					
+					int closeNumber = cli.getSocket().getPort() + cli.getSocket().getLocalPort();
+					output.println(cli.getName()+ " disconnected");
+					output.println(closeNumber+"AAA");
 					cli.getSocket().close();
 					System.exit(0);
 				} catch (IOException e1) {

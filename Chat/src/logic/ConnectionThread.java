@@ -72,16 +72,19 @@ public class ConnectionThread extends Thread{
 			while(!kill) {
 			
 			client = server.getServerSocket().accept();
-			clientSockets.add(client);
+			this.clientSockets.add(client);
 			int indexControl = clientSockets.indexOf(client);
 			BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			clientBuffersIn.add(input);
+			this.clientBuffersIn.add(input);
 			PrintStream output = new PrintStream(client.getOutputStream());
-			//output.println(222222);
-			clientBuffersOut.add(output);
+			this.clientBuffersOut.add(output);
 			ReaderThread reader = new ReaderThread(input, conn, clientBuffersOut, client, indexControl);
-			clientThread.add(reader);
-			clientThread.get(indexControl).start();
+			this.clientThread.add(reader);
+			conn.setClientBuffersIn(clientBuffersIn);
+			conn.setClientBuffersOut(clientBuffersOut);
+			conn.setClientSockets(clientSockets);
+			conn.setClientThread(clientThread);
+			conn.getClientThread().get(indexControl).start();
 			//reader.start();
 			System.out.println(clientSockets.size()+" Clients connected");
 			server.setClientSockets(clientSockets);

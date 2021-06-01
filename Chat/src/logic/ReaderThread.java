@@ -9,55 +9,64 @@ import java.util.Scanner;
 
 import javax.swing.JTextPane;
 
-
-
 public class ReaderThread extends Thread {
 	BufferedReader bufferInput;
 	PrintStream output;
-	ArrayList<PrintStream> clientBuffersOut= new  ArrayList<PrintStream>();
+	ArrayList<PrintStream> clientBuffersOut = new ArrayList<PrintStream>();
 	Socket cli;
-	boolean kill=true;
-	 int index;
-	 ConnectionThread conn;
-	public ReaderThread(BufferedReader buffer, ConnectionThread conn,ArrayList<PrintStream> allOuts,Socket cli, int index){
+	boolean kill = true;
+	int index;
+	ConnectionThread conn;
+
+	public ReaderThread(BufferedReader buffer, ConnectionThread conn, ArrayList<PrintStream> allOuts, Socket cli,
+			int index) {
 		this.bufferInput = buffer;
-		this.conn= conn;
+		this.conn = conn;
 		this.clientBuffersOut = allOuts;
-		this.index= index;
-		this.cli =cli;
+		//this.index = index;
+		this.cli = cli;
 	}
+
 	public void kill() {
-		this.kill=false;
+		this.kill = false;
 	}
+
 	@Override
-	public void run(){
-		while(kill) {
+	public void run() {
+		while (kill) {
 			try {
+				String message;
+				message = bufferInput.readLine();
+				index = conn.getClientSockets().indexOf(cli);
 				
-				String message="";
-				message=bufferInput.readLine();
-				/*if(message.equals(cli.toString())){
+				System.out.println(message + " ///// Before if");
+				int closeNumber = cli.getPort() + cli.getLocalPort();
+				String compare = closeNumber + "AAA";
+				if (message.equals(compare)) {
 					kill();
 					conn.getClientBuffersIn().remove(index);
 					conn.getClientBuffersOut().remove(index);
 					conn.getClientSockets().get(index).close();
 					conn.getClientSockets().remove(index);
 					conn.getClientThread().remove(index);
-					System.out.println(conn.getClientSockets().get(index));
-				}*/
-				for(int i =0; i< clientBuffersOut.size(); i++) {
+					System.out.println("Client disconnected");
+					
+
+				} else {
+					System.out.println("boi");
+					for (int i = 0; i < clientBuffersOut.size(); i++) {
 						clientBuffersOut.get(i).println(message);
+						clientBuffersOut.get(i).flush();
+					}
 				}
-			
-				//int indexControl = clientBuffersIn.indexOf(bufferInput);
-				
-				System.out.println(message +" /////Client message " + index);
-				//Scanner tec = new Scanner(System.in);
-				//message= tec.nextLine();
-				//output.println(message);
-				//output.flush();
-				//output.flush();
-				//output.println(message);
+
+				System.out.println(message + " /////Client message " + index);
+				// Scanner tec = new Scanner(System.in);
+				// message= tec.nextLine();
+				// output.println(message);
+				// output.flush();
+				// output.flush();
+				// output.println(message);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
