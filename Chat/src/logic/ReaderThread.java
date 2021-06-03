@@ -10,20 +10,18 @@ import java.util.Scanner;
 import javax.swing.JTextPane;
 
 public class ReaderThread extends Thread {
-	BufferedReader bufferInput;
-	PrintStream output;
-	ArrayList<PrintStream> clientBuffersOut = new ArrayList<PrintStream>();
-	Socket cli;
-	boolean kill = true;
-	int index;
-	ConnectionThread conn;
+	private BufferedReader bufferInput;
+	private ArrayList<PrintStream> clientBuffersOut = new ArrayList<PrintStream>();
+	private Socket cli;
+	private boolean kill = true;
+	private int index;
+	private ConnectionThread conn;
 
 	public ReaderThread(BufferedReader buffer, ConnectionThread conn, ArrayList<PrintStream> allOuts, Socket cli,
 			int index) {
 		this.bufferInput = buffer;
 		this.conn = conn;
 		this.clientBuffersOut = allOuts;
-		//this.index = index;
 		this.cli = cli;
 	}
 
@@ -49,13 +47,15 @@ public class ReaderThread extends Thread {
 					conn.getClientSockets().get(index).close();
 					conn.getClientSockets().remove(index);
 					conn.getClientThread().remove(index);
+					conn.getClientList().remove(index);
 					System.out.println("Client disconnected");
 					
 
 				} else {
 					System.out.println("boi");
+					String name = conn.getClientList().get(index).getName();
 					for (int i = 0; i < clientBuffersOut.size(); i++) {
-						clientBuffersOut.get(i).println(message);
+						clientBuffersOut.get(i).println(name+":"+message);
 						clientBuffersOut.get(i).flush();
 					}
 				}

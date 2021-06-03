@@ -13,6 +13,8 @@ import javax.swing.JTextField;
 
 import logic.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.awt.event.ActionEvent;
 
 public class InterfaceConnection extends JFrame {
@@ -81,13 +83,13 @@ public class InterfaceConnection extends JFrame {
 		textFieldPortNumber.setColumns(10);
 		textFieldPortNumber.setBounds(235, 155, 130, 20);
 		contentPane.add(textFieldPortNumber);
-		textFieldPortNumber.setText("3505");
+		textFieldPortNumber.setText("3501");
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int port = Integer.parseInt(textFieldPortNumber.getText());
 				System.out.println(port);
-				ClientLogic cli = new ClientLogic(textFieldUsername.getText(),port, textFieldIpDirecction.getText());
+				ClientLogic cli = new ClientLogic(textFieldUsername.getText(),port, textFieldIpDirecction.getText());	
 				InterfaceChat fc = new InterfaceChat(cli);
 				fc.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 				fc.setVisible(true);

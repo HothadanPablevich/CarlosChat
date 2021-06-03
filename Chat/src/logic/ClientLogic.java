@@ -35,6 +35,10 @@ public class ClientLogic {
 			e.printStackTrace();
 		}
     }
+	public ClientLogic(String name, Socket cli) {
+    	this.setName(name);
+    	this.setSocket(cli);
+    }
 	@Override
 	public String toString() {
 		return "ClientLogic [socket=" + socket + ", name=" + name + "]";

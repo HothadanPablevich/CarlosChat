@@ -66,6 +66,7 @@ public class InterfaceChat extends JFrame {
 		}   
 	    try {
 			output = new PrintStream(cli.getSocket().getOutputStream());
+			output.println(cli.getName());
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -112,23 +113,12 @@ public class InterfaceChat extends JFrame {
 		SendButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		SendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				boolean exit=false;//bandera para controlar ciclo del programa
-		    	//Socket para la comunicacion cliente servidor              
-		            //To read from the user (keyboard)           
-		            //Scanner tec = new Scanner(System.in);
-		            //send the line to the server
 		            String line="";
 		            	System.out.println("Client mensaje: ");                
-		                 line = cli.getName() +": " + mensaje.getText();
+		                 line = mensaje.getText();
 		                 System.out.println(line + " ////To the server");
 		            	 output.println(line);
-		            	 //TextChat.setText(TextChat.getText() + "\n" + cli.getName() + ": " + mensaje.getText());
 		            	 mensaje.setText("");
-		            //read the answer and print it
-		            //String st = input.readLine();
-		            //if( st != null ) System.out.println("Client -> received message: " + st );    
-		            //System.out.println("Client -> End of the program");    
-
 			}
 		});
 		SendButton.setBounds(568, 368, 131, 31);
